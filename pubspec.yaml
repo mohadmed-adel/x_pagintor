@@ -1,6 +1,6 @@
 name: x_pagintor
 description: A new Flutter package  to handle pagintion requests
-version: 0.0.2
+version: 0.0.4
 homepage: https://github.com/axee1033/x_pagintor.git
 
 environment:
@@ -10,7 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_staggered_animations: ^1.0.0
+  flutter_staggered_animations: ^1.1.1
+   
 
 dev_dependencies:
   flutter_test:
