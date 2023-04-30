@@ -1,6 +1,6 @@
 name: x_pagintor
 description: A new Flutter package  to handle pagintion requests
-version: 0.0.4
+version: 0.0.6
 homepage: https://github.com/axee1033/x_pagintor.git
 
 environment:

@@ -8,6 +8,8 @@ import 'package:x_pagintor/x_pagintor.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,6 +20,8 @@ class MyApp extends StatelessWidget {
 }
 
 class PagintionTest extends StatefulWidget {
+  const PagintionTest({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return PagintionTestState();
@@ -85,7 +89,7 @@ class PagintionTestState extends State<PagintionTest> {
           padding: const EdgeInsets.all(16.0),
           child: Text(productsData.datat!.length.toString()),
         ),
-        FlatButton(
+        TextButton(
           onPressed: retryListener,
           child: const Text('حاول مجداد'),
         )
@@ -258,8 +262,8 @@ class ProductWidget extends StatelessWidget {
                               alignment: Alignment.center,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  primary: Colors.grey,
-                                  onPrimary: Colors.red,
+                                  foregroundColor: Colors.red,
+                                  backgroundColor: Colors.grey,
                                   shadowColor: Colors.red,
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(

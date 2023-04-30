@@ -114,7 +114,7 @@ class XPaginator<T> extends StatefulWidget {
     this.addRepaintBoundaries = true,
     this.addSemanticIndexes = true,
     this.itemExtent,
-  })  : listType = ListType.LIST_VIEW,
+  })  : listType = ListType.listView,
         onPageChanged = null,
         pageSnapping = true,
         pageController = null,
@@ -145,7 +145,7 @@ class XPaginator<T> extends StatefulWidget {
     this.addAutomaticKeepAlives = true,
     this.addRepaintBoundaries = true,
     this.addSemanticIndexes = true,
-  })  : listType = ListType.GRID_VIEW,
+  })  : listType = ListType.gridView,
         itemExtent = null,
         onPageChanged = null,
         pageSnapping = true,
@@ -169,7 +169,7 @@ class XPaginator<T> extends StatefulWidget {
     this.onPageChanged,
     this.pageSnapping = true,
     this.pageController,
-  })  : listType = ListType.PAGE_VIEW,
+  })  : listType = ListType.pageview,
         padding = null,
         shrinkWrap = false,
         scrollController = null,
@@ -302,7 +302,7 @@ class XPaginatorState<T> extends State<XPaginator> {
   }
 
   void _initialize() {
-    _listStatus = _ListStatus.LOADING;
+    _listStatus = _ListStatus.loading;
     _listItems = [];
     _currentPage = 0;
     _nTotalItems = 0;
@@ -311,16 +311,16 @@ class XPaginatorState<T> extends State<XPaginator> {
   @override
   Widget build(BuildContext context) {
     switch (_listStatus) {
-      case _ListStatus.SUCCESS:
+      case _ListStatus.success:
         return _buildPaginatorWidget();
 
-      case _ListStatus.LOADING:
+      case _ListStatus.loading:
         return Center(child: _loadingWidgetBuilder());
 
-      case _ListStatus.ERROR:
+      case _ListStatus.error:
         return Center(child: _errorWidgetBuilder(_firstPageData, _onError));
 
-      case _ListStatus.EMPTY:
+      case _ListStatus.empty:
       default:
         return _emptyListWidgetBuilder(_firstPageData);
     }
@@ -328,7 +328,7 @@ class XPaginatorState<T> extends State<XPaginator> {
 
   Widget _buildPaginatorWidget() {
     switch (_listType) {
-      case ListType.LIST_VIEW:
+      case ListType.listView:
         return AnimationLimiter(
           child: ListView.builder(
             key: _scrollViewKey,
@@ -349,7 +349,7 @@ class XPaginatorState<T> extends State<XPaginator> {
             addSemanticIndexes: _addSemanticIndexes,
           ),
         );
-      case ListType.GRID_VIEW:
+      case ListType.gridView:
         return AnimationLimiter(
           child: GridView.builder(
             key: _scrollViewKey,
@@ -370,7 +370,7 @@ class XPaginatorState<T> extends State<XPaginator> {
             addSemanticIndexes: _addSemanticIndexes,
           ),
         );
-      case ListType.PAGE_VIEW:
+      case ListType.pageview:
       default:
         return PageView.builder(
           key: _scrollViewKey,
@@ -460,7 +460,7 @@ class XPaginatorState<T> extends State<XPaginator> {
     if (_listItems.isEmpty) {
       setState(
         () {
-          _listStatus = _ListStatus.LOADING;
+          _listStatus = _ListStatus.loading;
         },
       );
       _initialFutureCall();
@@ -542,21 +542,21 @@ class XPaginatorState<T> extends State<XPaginator> {
       _nTotalItems = _totalItemsGetter(pageData);
       if (_pageErrorChecker(pageData)) {
         setState(() {
-          _listStatus = _ListStatus.ERROR;
+          _listStatus = _ListStatus.error;
         });
       } else if (_nTotalItems == 0) {
         setState(() {
-          _listStatus = _ListStatus.EMPTY;
+          _listStatus = _ListStatus.empty;
         });
       } else {
         _currentPage = _currentPage! + 1;
         _listItems.addAll(_pageItemsGetter(pageData));
         setState(() {
-          _listStatus = _ListStatus.SUCCESS;
+          _listStatus = _ListStatus.success;
         });
       }
     });
   }
 }
 
-enum _ListStatus { LOADING, ERROR, SUCCESS, EMPTY }
+enum _ListStatus { loading, error, success, empty }
