@@ -1,57 +1,49 @@
-X Paginator
-X Paginator is a Flutter package that provides a customizable pagination widget for your Flutter applications.
+# X Paginator
 
-Features
-Customizable pagination widget with configurable buttons and text.
-Supports both vertical and horizontal pagination.
-Provides callback functions for handling pagination events.
-Installation
-To use X Paginator in your Flutter project, add the following dependency to your pubspec.yaml file:
+A simple and flexible package for Flutter to implement pagination in your applications.
 
-yaml
+## Installation
 
+Add `x_paginator` as a dependency in your `pubspec.yaml` file:
+
+```yaml
 dependencies:
   x_paginator: ^1.0.0
-Then, run flutter pub get to install the package.
+```
 
-Usage
-To use X Paginator in your Flutter project, import the package:
+## Usage
 
-dart
+Import the package:
 
+```dart
 import 'package:x_paginator/x_paginator.dart';
-Then, add the XPaginator widget to your widget tree:
+```
 
-dart
+Use the `XPaginator` widget to display your data:
 
+```dart
 XPaginator(
-  itemCount: 100,
-  onPageChanged: (int pageIndex) {
-    // Handle pagination events
+  fetchPage: (page) async {
+    // Fetch data for the given page.
+    // Return a list of items for this page.
   },
-)
-You can customize the appearance of the XPaginator widget using the various constructor parameters. For example:
-
-dart
-
-XPaginator(
-  itemCount: 100,
-  buttonColor: Colors.blue,
-  activeTextColor: Colors.white,
-  onPageChanged: (int pageIndex) {
-    // Handle pagination events
+  itemBuilder: (item) {
+    // Build a widget to display the item.
+    return ListTile(
+      title: Text(item.title),
+      subtitle: Text(item.subtitle),
+      leading: Icon(Icons.star),
+    );
   },
-)
-For a full list of available customization options, refer to the XPaginator documentation.
+),
+```
 
-Examples
-For example usage of X Paginator, refer to the example directory in the repository.
+For more advanced usage, see the `example` directory.
 
-Contributing
-If you'd like to contribute to X Paginator, please fork the repository and create a new branch for your changes. Once you've made your changes, submit a pull request and we'll review your changes.
+## Contributing
 
-License
-This package is licensed under the MIT License. See the LICENSE file for details.
+Contributions are welcome! Please open an issue or pull request on GitHub.
 
-Acknowledgements
-X Paginator was inspired by the Flutter Pagination package.
+## License
+
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
