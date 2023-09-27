@@ -52,13 +52,13 @@ import 'type_definitions.dart';
 
 class XPaginator<T> extends StatefulWidget {
   final PageLoadFuture<T> pageLoadFuture;
-  final PageItemsGetter pageItemsGetter;
+  final PageItemsGetter<T?> pageItemsGetter;
   final ListItemBuilder listItemBuilder;
   final LoadingWidgetBuilder loadingWidgetBuilder;
-  final ErrorWidgetBuilder errorWidgetBuilder;
+  final ErrorWidgetBuilder<T?> errorWidgetBuilder;
   final EmptyListWidgetBuilder emptyListWidgetBuilder;
-  final TotalItemsGetter totalItemsGetter;
-  final PageErrorChecker pageErrorChecker;
+  final TotalItemsGetter<T> totalItemsGetter;
+  final PageErrorChecker<T?> pageErrorChecker;
 
   /// common properties
   final Key? scrollViewKey;

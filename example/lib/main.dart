@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:x_pagintor/x_pagintor.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Flutter X Paginator',
       home: PagintionTest(),
     );
@@ -47,10 +47,11 @@ class PagintionTestState extends State<PagintionTest> {
           crossAxisCount: 2,
           childAspectRatio: (itemWidth / itemHeight),
         ),
-        pageLoadFuture: (page) =>
+        pageLoadFuture: (int page) =>
             getProductsPagtion(page: page, context: context),
         pageItemsGetter: listItemsGetter,
-        listItemBuilder: listItemBuilder,
+        listItemBuilder: (pagemodel, index) =>
+            listItemBuilder(pagemodel, index),
         loadingWidgetBuilder: loadingWidgetMaker,
         errorWidgetBuilder: errorWidgetMaker,
         emptyListWidgetBuilder: emptyListWidgetMaker,
@@ -195,9 +196,9 @@ class ProductWidget extends StatelessWidget {
                               ),
                               overflow: TextOverflow.ellipsis,
                             ),
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              children: const [
+                              children: [
                                 Text(
                                   " الكمية  : ",
                                   style: TextStyle(

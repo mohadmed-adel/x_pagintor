@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 typedef PageLoadFuture<T> = Future<T> Function(int page);
 typedef PageItemsGetter<T> = List<dynamic> Function(T pageData);
-typedef ListItemBuilder = Widget Function(dynamic itemData, int index);
+typedef ListItemBuilder<T> = Widget Function(T itemData, int index);
 typedef LoadingWidgetBuilder = Widget Function();
 typedef RetryListener = void Function();
 typedef ErrorWidgetBuilder<T> = Widget Function(
