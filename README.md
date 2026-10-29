@@ -8,7 +8,7 @@ Add `x_paginator` as a dependency in your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  x_paginator: ^0.0.6
+  x_pagintor: ^1.0.3
 ```
 
 ## Usage
