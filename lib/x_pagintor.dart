@@ -263,6 +263,7 @@ class XPaginatorState<T> extends State<XPaginator> {
   int? _currentPage;
   int? _nTotalItems;
   T? _firstPageData;
+  int _initialLoadGeneration = 0;
 
   XPaginatorState(
     this._pageLoadFuture,
@@ -306,6 +307,11 @@ class XPaginatorState<T> extends State<XPaginator> {
     _listItems = [];
     _currentPage = 0;
     _nTotalItems = 0;
+  }
+
+  void _setStateIfMounted(VoidCallback fn) {
+    if (!mounted) return;
+    setState(fn);
   }
 
   @override
@@ -406,6 +412,7 @@ class XPaginatorState<T> extends State<XPaginator> {
               _listItems.addAll(_pageItemsGetter(snapshot.data));
               _currentPage = _currentPage! + 1;
               Future.microtask(() {
+                if (!mounted) return;
                 setState(() {});
               });
               return _loadingWidgetBuilder();
@@ -438,6 +445,7 @@ class XPaginatorState<T> extends State<XPaginator> {
               _listItems.addAll(_pageItemsGetter(snapshot.data));
               _currentPage = _currentPage! + 1;
               Future.microtask(() {
+                if (!mounted) return;
                 setState(() {});
               });
               return _loadingWidgetBuilder();
@@ -458,14 +466,12 @@ class XPaginatorState<T> extends State<XPaginator> {
 
   void _onError() {
     if (_listItems.isEmpty) {
-      setState(
-        () {
-          _listStatus = _ListStatus.loading;
-        },
-      );
+      _setStateIfMounted(() {
+        _listStatus = _ListStatus.loading;
+      });
       _initialFutureCall();
     } else {
-      setState(() {});
+      _setStateIfMounted(() {});
     }
   }
 
@@ -529,29 +535,31 @@ class XPaginatorState<T> extends State<XPaginator> {
 
     if (resetState) {
       _initialize();
-      setState(() {});
+      _initialLoadGeneration++;
+      _setStateIfMounted(() {});
       _initialFutureCall();
     }
-    setState(() {});
+    _setStateIfMounted(() {});
   }
 
   void _initialFutureCall() {
-    Future<T> future = _pageLoadFuture(1);
-    future.then((T pageData) {
+    final generation = _initialLoadGeneration;
+    _pageLoadFuture(1).then((T pageData) {
+      if (!mounted || generation != _initialLoadGeneration) return;
       _firstPageData = pageData;
       _nTotalItems = _totalItemsGetter(pageData);
       if (_pageErrorChecker(pageData)) {
-        setState(() {
+        _setStateIfMounted(() {
           _listStatus = _ListStatus.error;
         });
       } else if (_nTotalItems == 0) {
-        setState(() {
+        _setStateIfMounted(() {
           _listStatus = _ListStatus.empty;
         });
       } else {
         _currentPage = _currentPage! + 1;
         _listItems.addAll(_pageItemsGetter(pageData));
-        setState(() {
+        _setStateIfMounted(() {
           _listStatus = _ListStatus.success;
         });
       }
